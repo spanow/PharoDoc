@@ -1,12 +1,6 @@
 Class {
 	#name : #ReWritedPharoDoc,
 	#superclass : #Object,
-	#instVars : [
-		'acdc'
-	],
-	#classInstVars : [
-		'acdc'
-	],
 	#category : #PharoDocTestPhD
 }
 
@@ -14,56 +8,60 @@ Class {
 ReWritedPharoDoc class >> methodeCreationDeFichier:className [
 "ceci est un commentaire"
 
-	|sautLigne index commentClass elementDuByteString subClasses work stream methodes elementDesMethodes |
+	|index commentClass elementDuByteString subClasses work methodes elementDesMethodes title pencil|
 	commentClass := className comment.
 	
-	sautLigne:= '
-	'.
+	pencil := Pencil new.
 	work := FileSystem disk workingDirectory.
-	stream := (work / 'manilmasdo2ua.txt') writeStream.
-	stream nextPutAll: 'Resume of the class'.
+	pencil creationFichier: 'leTest.txt'.
+	
+	
+	title := Title new.
+	title title: 'Resumé de la classe :'.
+	title nomClass: className name.
+	pencil ecritureDansFichier: title titreConstruit.
 
-	stream nextPutAll:  sautLigne.
-	stream nextPutAll:  'Le nom de la superclasse: '.
-	stream nextPutAll: className superclass name.
+	
+	pencil ecritureDansFichier:  'Le nom de la superclasse: '.
+	pencil ecritureDansFichier: className superclass name.
 
-	stream nextPutAll:  sautLigne.
-	stream nextPutAll: 'Le commentaire de la classe'.
-	stream nextPutAll:  sautLigne.
+	
+	pencil ecritureDansFichier: 'Le commentaire de la classe'.
+	
 	methodes := className methodDict asArray.
 	
 	
 	
-	stream nextPutAll: commentClass.
+	pencil ecritureDansFichier: commentClass.
 	
-	stream nextPutAll:  sautLigne.
-	stream nextPutAll: 'Les variables d instance'.
-	stream nextPutAll:  sautLigne.
-	stream nextPutAll: className instanceVariablesString.
+	
+	pencil ecritureDansFichier: 'Les variables d instance'.
+	
+	pencil ecritureDansFichier: className instanceVariablesString.
 		
-	stream nextPutAll:  sautLigne.
-	stream nextPutAll: 'Les sous classes'.
-	stream nextPutAll:  sautLigne.
+	
+	pencil ecritureDansFichier: 'Les sous classes'.
+	
 	
 	subClasses := className subclasses.
 	index :=1.
 	elementDuByteString := subClasses at: index.
 	[elementDuByteString isNotNil & index<= subClasses size] whileTrue: [ elementDuByteString := subClasses at:index.
 		index := index + 1.
-		stream nextPutAll: ' '.
-		stream nextPutAll: elementDuByteString  name. ].
-	stream nextPutAll:  sautLigne.
+		pencil ecritureDansFichier: ' '.
+		pencil ecritureDansFichier: elementDuByteString  name. ].
+	
 	index :=1.
 	
-	stream nextPutAll:  sautLigne.
-	stream nextPutAll: 'Les methodes'.
-	stream nextPutAll:  sautLigne.
+	
+	pencil ecritureDansFichier: 'Les methodes'.
+	
 	
 	elementDesMethodes := methodes at:index.
 	[elementDesMethodes isNotNil & index<= methodes size] whileTrue: [ elementDesMethodes := methodes at:index.
 		index := index + 1.
-		stream nextPutAll: sautLigne.
-		stream nextPutAll: elementDesMethodes  name. ].
+	
+		pencil ecritureDansFichier: elementDesMethodes  name. ].
 
-	stream close.
+	pencil fermetureFichier.
 ]
