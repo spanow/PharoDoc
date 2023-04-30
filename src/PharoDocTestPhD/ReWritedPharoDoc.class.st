@@ -13,7 +13,7 @@ ReWritedPharoDoc class >> methodeCreationDeFichier:className [
 	
 	pencil := Pencil new.
 	work := FileSystem disk workingDirectory.
-	pencil creationFichier: 'leTest.txt'.
+	pencil creationFichier: 'FichierDeSortie.txt'.
 	
 	
 	title := Title new.
@@ -28,7 +28,7 @@ ReWritedPharoDoc class >> methodeCreationDeFichier:className [
 	
 	pencil ecritureDansFichier: 'Le commentaire de la classe'.
 	
-	methodes := className methodDict asArray.
+	methodes := className methods.
 	
 	
 	
@@ -60,8 +60,12 @@ ReWritedPharoDoc class >> methodeCreationDeFichier:className [
 	elementDesMethodes := methodes at:index.
 	[elementDesMethodes isNotNil & index<= methodes size] whileTrue: [ elementDesMethodes := methodes at:index.
 		index := index + 1.
-	
-		pencil ecritureDansFichier: elementDesMethodes  name. ].
+		pencil ecritureDansFichier: elementDesMethodes name.
+		elementDesMethodes comment isNotNil
+		ifTrue: [
+			pencil ecritureDansFichier: 'Commentaire de la méthode'.
+			pencil ecritureDansFichier: elementDesMethodes comment. ]
+		 ].
 
 	pencil fermetureFichier.
 ]
