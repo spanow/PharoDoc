@@ -1,81 +1,125 @@
-Certainly! Here is the action plan translated into English:
+Voici les attributs pour chaque objet mentionné dans la plateforme de bénévolat.
 
----
+### 1. **Invité**
 
-### **Action Plan for Migrating Microservices to New Java and Spring Boot Versions**
+Un invité est une entité minimale, donc il n'a pas d'attributs persistants spécifiques à gérer. Les invités interagissent principalement en consultant des informations publiques.
 
-#### **1. Preliminary Analysis and Planning**
+### 2. **Bénévole**
 
-1.1. **Inventory of Microservices**
-   - List all microservices to be migrated.
-   - Identify dependencies between the microservices.
-   - Document the current versions of Java, Spring Boot, and other dependencies.
+Attributs pour un **Bénévole** :
+- `id` : Identifiant unique du bénévole.
+- `firstName` : Prénom du bénévole.
+- `lastName` : Nom de famille du bénévole.
+- `email` : Adresse email du bénévole.
+- `phoneNumber` : Numéro de téléphone du bénévole.
+- `password` : Mot de passe pour la connexion.
+- `address` : Adresse du bénévole.
+- `city` : Ville.
+- `state` : État ou région.
+- `country` : Pays.
+- `postalCode` : Code postal.
+- `skills` : Compétences du bénévole (liste ou texte).
+- `availability` : Disponibilités du bénévole (jours, heures).
+- `profilePicture` : URL de la photo de profil.
+- `createdAt` : Date de création du profil.
+- `updatedAt` : Dernière date de mise à jour du profil.
+- `isActive` : Statut d'activation du compte.
+- `confirmedEmail` : Statut de confirmation de l'email.
+- `confirmedPhoneNumber` : Statut de confirmation du numéro de téléphone.
+- `roles` : Liste des rôles associés au bénévole (ex. bénévole, administrateur).
 
-1.2. **Risk Assessment**
-   - Identify potential risks, such as incompatibilities with certain libraries or performance impacts.
-   - Assess the impact of migration on other services and integrated systems.
+### 3. **ONG (Organisation à but non lucratif)**
 
-1.3. **Prioritization**
-   - Prioritize microservices based on their criticality to the business.
-   - Start by migrating one or two non-critical microservices to test the process.
+Attributs pour une **ONG** :
+- `id` : Identifiant unique de l'ONG.
+- `name` : Nom de l'ONG.
+- `description` : Description de l'ONG.
+- `email` : Adresse email officielle de l'ONG.
+- `phoneNumber` : Numéro de téléphone de l'ONG.
+- `address` : Adresse du siège de l'ONG.
+- `city` : Ville.
+- `state` : État ou région.
+- `country` : Pays.
+- `postalCode` : Code postal.
+- `createdAt` : Date de création du profil de l'ONG.
+- `updatedAt` : Dernière date de mise à jour du profil de l'ONG.
+- `validated` : Statut de validation de l'ONG par les administrateurs.
+- `adminIds` : Liste des identifiants des administrateurs de l'ONG.
+- `volunteerIds` : Liste des identifiants des bénévoles associés à l'ONG.
+- `eventIds` : Liste des identifiants des événements organisés par l'ONG.
+- `goals` : Objectifs annuels de l'ONG (facultatif).
 
-1.4. **Resources and Training**
-   - Ensure that the necessary resources (testing and pre-production environments) are available.
-   - Plan training or information sessions on the new versions of Java and Spring Boot for the team.
+### 4. **Administrateur**
 
----
+Attributs pour un **Administrateur** (souvent hérités de Bénévole) :
+- `id` : Identifiant unique de l'administrateur (hérité du bénévole).
+- `organizationId` : Identifiant de l'ONG associée.
+- `firstName` : Prénom de l'administrateur.
+- `lastName` : Nom de famille de l'administrateur.
+- `email` : Adresse email.
+- `phoneNumber` : Numéro de téléphone.
+- `role` : Rôle spécifique dans l'ONG (ex. gestionnaire d'événements, responsable communication).
+- `createdAt` : Date de création du profil.
+- `updatedAt` : Dernière date de mise à jour du profil.
 
-#### **2. Environment Migration and Code Modifications**
+### 5. **Event (Événement)**
 
-2.1. **Environment Migration**
-   - **Update Environments**: Prepare development, testing, and production environments for the new versions of Java and Spring Boot.
-   - **Configuration Management Strategy**: Update configuration files for each microservice, ensuring compatibility with the new versions.
+Attributs pour un **Événement** :
+- `id` : Identifiant unique de l'événement.
+- `title` : Titre de l'événement.
+- `description` : Description de l'événement.
+- `location` : Lieu de l'événement.
+- `date` : Date et heure de l'événement.
+- `duration` : Durée de l'événement.
+- `createdAt` : Date de création de l'événement.
+- `updatedAt` : Dernière date de mise à jour de l'événement.
+- `maxParticipants` : Nombre maximum de participants.
+- `organizationId` : Identifiant de l'ONG organisatrice.
+- `adminIds` : Liste des identifiants des administrateurs responsables de l'événement.
+- `volunteerIds` : Liste des identifiants des bénévoles inscrits à l'événement.
+- `status` : Statut de l'événement (ex. en cours, terminé, annulé).
 
-2.2. **Code Modifications**
-   - **Code Analysis**: Identify code parts affected by the migration (deprecated APIs, changes in Spring Boot).
-   - **Dependency Updates**: Update `pom.xml` or `build.gradle` to use the latest versions of Spring Boot and Java.
-   - **Code Refactoring**: Adapt the code to eliminate dependencies on deprecated APIs and leverage new features.
-   - **Test Updates**: Update unit and integration tests to cover the changes.
+### 6. **Notification**
 
----
+Attributs pour une **Notification** :
+- `id` : Identifiant unique de la notification.
+- `recipientId` : Identifiant du destinataire (bénévole ou administrateur).
+- `type` : Type de notification (ex. email, SMS).
+- `content` : Contenu de la notification.
+- `sentAt` : Date et heure d'envoi de la notification.
+- `status` : Statut de la notification (envoyée, échouée, en attente).
+- `eventId` : Identifiant de l'événement associé (si applicable).
 
-#### **3. Deployment Strategy**
+### 7. **Reporting**
 
-3.1. **Progressive Deployment**
-   - **Canary Deployment**: Deploy new versions on a small percentage of instances to limit impact in case of issues.
-   - **Blue-Green Deployment**: Use a Blue-Green deployment strategy to switch production environments without service interruption.
-   - **Step-by-Step Deployment**: Gradually deploy microservices, starting with the least critical ones.
+Attributs pour un **Reporting** :
+- `id` : Identifiant unique du rapport.
+- `organizationId` : Identifiant de l'ONG associée.
+- `eventId` (facultatif) : Identifiant de l'événement associé (si applicable).
+- `title` : Titre du rapport.
+- `content` : Contenu du rapport (texte ou fichier).
+- `createdAt` : Date de création du rapport.
+- `updatedAt` : Dernière date de mise à jour du rapport.
+- `createdBy` : Identifiant de l'utilisateur ayant créé le rapport.
+- `status` : Statut du rapport (en cours, finalisé, publié).
 
-3.2. **Monitoring and Validation**
-   - **Real-Time Monitoring**: Implement detailed monitoring to track performance and service health after deployment.
-   - **Post-Deployment Analysis**: Review logs, metrics, and feedback to detect and correct issues.
-   - **Functional Validation**: Run end-to-end tests to ensure all critical functionalities work as expected.
+### 8. **Chat**
 
----
+Attributs pour un **Chat** :
+- `id` : Identifiant unique de la discussion.
+- `title` : Titre ou sujet de la discussion.
+- `participantsIds` : Liste des identifiants des participants (bénévoles, administrateurs).
+- `createdAt` : Date de création de la discussion.
+- `messages` : Liste des messages dans la discussion.
+- `eventId` (facultatif) : Identifiant de l'événement associé (si applicable).
 
-#### **4. Risk Management and Rollback Plan**
+### 9. **Message (pour Chat)**
 
-4.1. **Rollback Plan**
-   - **Prepare a Rollback Plan**: Document a strategy to revert to the previous version in case of major issues during migration.
-   - **Backups and Snapshots**: Take snapshots of production environments and back up databases before initiating the migration.
+Attributs pour un **Message** dans un Chat :
+- `id` : Identifiant unique du message.
+- `chatId` : Identifiant de la discussion associée.
+- `senderId` : Identifiant de l'expéditeur du message.
+- `content` : Contenu du message.
+- `timestamp` : Date et heure d'envoi du message.
 
-4.2. **Documentation and Communication**
-   - **Continuous Documentation**: Update technical documentation to reflect new versions and code changes.
-   - **Communication**: Regularly inform stakeholders (development team, operations teams, management) about the migration status.
-
----
-
-#### **5. Finalization and Optimization**
-
-5.1. **Post-Migration Optimization**
-   - **Performance Analysis**: Monitor microservice performance after migration and optimize as needed.
-   - **Cost Optimization**: Analyze costs associated with the new versions and adjust allocated resources if necessary.
-
-5.2. **Retrospective and Continuous Improvement**
-   - **Migration Evaluation**: Conduct a retrospective to evaluate what worked well and what could be improved for future migrations.
-   - **Continuous Learning**: Leverage lessons learned to enhance deployment and microservice management processes.
-
----
-
-#### **6. Planning Future Migrations**
-   - **Establish a Regular Update Cycle: Set up a regular update schedule to avoid large-scale migrations and keep microservices up to date.
+Ces objets peuvent être enrichis selon les besoins spécifiques de l'application. Chacun d'eux est conçu pour être modulaire et extensible afin de couvrir un large éventail de fonctionnalités dans la plateforme de bénévolat.
